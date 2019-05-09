@@ -9,4 +9,9 @@ namespace arma3_server_starter
             Console.WriteLine("Hello World!");
         }
     }
+
+    class Runner
+    {
+        
+    }
 }

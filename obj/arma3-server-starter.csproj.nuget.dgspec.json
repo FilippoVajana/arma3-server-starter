@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj": {}
+    "c:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj": {
+    "c:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj",
+        "projectUniqueName": "c:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj",
         "projectName": "arma3-server-starter",
-        "projectPath": "C:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj",
+        "projectPath": "c:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\arma3-server-starter.csproj",
         "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\obj\\",
+        "outputPath": "c:\\Users\\filip\\Documents\\Projects\\arma3-server-starter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
