@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace arma3_server_starter
 {
@@ -9,7 +10,7 @@ namespace arma3_server_starter
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Arma3 Server Launcher");
 
             // init runner
             var runner = new Runner();
@@ -35,13 +36,39 @@ namespace arma3_server_starter
             var exec = Directory.GetFiles(ServerFolder, @"*x64.exe", SearchOption.TopDirectoryOnly)
                                 .First();      
 
+            // mission params
+
+            // vanilla mission
+            //var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_Altis\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_Altis\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_Altis"" -name=KP_964_Altis -filePatching";
+            
+            // RHS mission
+            var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis"" -name=KP_964_RHS_Altis -filePatching ""-mod=D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
+
             // start server
+            Console.WriteLine("Starting Arma3 Server");
+
             var serverProc = new Process();
             serverProc.StartInfo.FileName = $"{exec}";
+            serverProc.StartInfo.Arguments = $"{serverParams}";
             serverProc.StartInfo.CreateNoWindow = false;
             serverProc.StartInfo.UseShellExecute = false;
-
             serverProc.Start();            
+
+            // start headless clients
+            int hc_num = 0;
+            var hcParams = @"-client -connect=localhost -port=2302  -nosound -password=sig4freedom -profiles=""D:\Games\Arma3\Profiles"" -mod=""D:\Games\Arma3\Game\mods\@CBA_A3""";
+            for (int i = 0; i < hc_num; i++)
+            {
+                Task.Delay(60000).Wait();
+                Console.WriteLine($"Starting Arma3 HC{i}");
+                
+                var hcProc = new Process();
+                hcProc.StartInfo.FileName = $"{exec}";
+                hcProc.StartInfo.Arguments = $"{hcParams}";
+                hcProc.StartInfo.CreateNoWindow = false;
+                hcProc.StartInfo.UseShellExecute = false;
+                hcProc.Start(); 
+            }           
         }
     }
 }
