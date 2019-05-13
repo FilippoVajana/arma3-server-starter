@@ -1,5 +1,7 @@
 
 using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace arma3_server_starter
 {
@@ -8,9 +10,8 @@ namespace arma3_server_starter
     /// </summary>
     public class ServerConfig
     {
-        public ServerConfig(string configPath=null)
-        {
-            
+        public ServerConfig()
+        {            
         }
 
         // parameters
@@ -32,8 +33,11 @@ namespace arma3_server_starter
             string json = JsonConvert.SerializeObject(this);
 
             // create filename
+            var name = "server.json"; 
+            var path = Path.Combine(MissionsFolder, name);           
 
             // create file
+            File.WriteAllText(path, json);
         }
     }
 

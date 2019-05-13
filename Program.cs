@@ -42,7 +42,10 @@ namespace arma3_server_starter
             //var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_Altis\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_Altis\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_Altis"" -name=KP_964_Altis -filePatching";
             
             // RHS mission
-            var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis"" -name=KP_964_RHS_Altis -filePatching ""-mod=D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
+            //var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_RHS_Altis"" -name=KP_964_RHS_Altis -filePatching ""-mod=D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
+
+            // Lythium RHS
+            var serverParams = @"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium"" -name=KP_964_RHS_Lythium -filePatching ""-mod=D:\Games\Arma3\Game\mods\@Advanced AI Command;D:\Games\Arma3\Game\mods\@LYTHIUM;D:\Games\Arma3\Game\mods\@Jbad;D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
 
             // start server
             Console.WriteLine("Starting Arma3 Server");
@@ -55,11 +58,12 @@ namespace arma3_server_starter
             serverProc.Start();            
 
             // start headless clients
+            // System.Console.WriteLine("Press a button to launch headless clients");
+            // Console.ReadKey(true);
             int hc_num = 2;
-            var hcParams = @"-client -connect=localhost -port=2302  -nosound -password=sig4freedom -profiles=""D:\Games\Arma3\Profiles"" -mod=""D:\Games\Arma3\Game\mods\@CBA_A3""";
+            var hcParams = @"-client -connect=localhost -port=2302  -nosound -password=sig4freedom -profiles=""D:\Games\Arma3\Profiles"" -mod=""D:\Games\Arma3\Game\mods\@Advanced AI Command;D:\Games\Arma3\Game\mods\@LYTHIUM;D:\Games\Arma3\Game\mods\@Jbad;D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
             for (int i = 0; i < hc_num; i++)
-            {
-                Task.Delay(60000).Wait();
+            {                
                 Console.WriteLine($"Starting Arma3 HC{i}");
                 
                 var hcProc = new Process();
@@ -68,6 +72,8 @@ namespace arma3_server_starter
                 hcProc.StartInfo.CreateNoWindow = false;
                 hcProc.StartInfo.UseShellExecute = false;
                 hcProc.Start(); 
+
+                Task.Delay(60000).Wait();
             }           
         }
     }
