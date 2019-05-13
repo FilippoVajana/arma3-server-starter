@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>arma3_server_starter</RootNamespace>
   </PropertyGroup>
-
+  <ItemGroup>    
+    <PackageReference Include="Newtonsoft.Json" Version="*"/>
+  </ItemGroup>
 </Project>
