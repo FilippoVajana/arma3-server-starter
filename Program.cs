@@ -54,12 +54,12 @@ namespace arma3_server_starter
             serverProc.StartInfo.FileName = $"{exec}";
             serverProc.StartInfo.Arguments = $"{serverParams}";
             serverProc.StartInfo.CreateNoWindow = false;
-            serverProc.StartInfo.UseShellExecute = false;
+            serverProc.StartInfo.UseShellExecute = true;
             serverProc.Start();            
 
             // start headless clients
-            // System.Console.WriteLine("Press a button to launch headless clients");
-            // Console.ReadKey(true);
+            System.Console.WriteLine("Press a button to launch headless clients");
+            Console.ReadKey(true);
             int hc_num = 2;
             var hcParams = @"-client -connect=localhost -port=2302  -nosound -password=sig4freedom -profiles=""D:\Games\Arma3\Profiles"" -mod=""D:\Games\Arma3\Game\mods\@Advanced AI Command;D:\Games\Arma3\Game\mods\@LYTHIUM;D:\Games\Arma3\Game\mods\@Jbad;D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
             for (int i = 0; i < hc_num; i++)
