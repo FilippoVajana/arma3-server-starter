@@ -15,12 +15,18 @@ namespace arma3_server_starter
         }
 
         // parameters
+
+        //
+        // move to app.config
         public string ServerFolder { get; set; }
         public string MissionsFolder { get; set; }
         public string ModsFolder { get; set; }
+        //
+        //
+
         public int HCCount { get; set; }
-        public ServerParams SParams { get; set; }
-        public HCParams HParams { get; set; }
+        public GameParams GameParams { get; set; }
+        public HeadlessParams HCParams { get; set; }
 
         private ServerConfig Load(string configPath)
         {
@@ -33,7 +39,7 @@ namespace arma3_server_starter
             string json = JsonConvert.SerializeObject(this);
 
             // create filename
-            var name = $"{this.SParams.Name}_server.json"; 
+            var name = $"{this.GameParams.Name}_server.json"; 
             var path = Path.Combine(MissionsFolder, name);           
 
             // create file
@@ -41,7 +47,7 @@ namespace arma3_server_starter
         }
     }
 
-    public class ServerParams
+    public class GameParams
     {
         public int Port { get; set; }
         public string Config { get; set; }
@@ -57,7 +63,7 @@ namespace arma3_server_starter
         }
     }
 
-    public class HCParams
+    public class HeadlessParams
     {
         public bool Client { get; set; }
         public string Connect { get; set; }

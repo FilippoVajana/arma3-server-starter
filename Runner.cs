@@ -5,28 +5,43 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace arma3_server_starter
-{
+{   
+    /// <summary>
+    /// Handles the run of server and headless clients.
+    /// </summary>
     public class Runner
     {
         private string ServerFolder = @"D:\Games\Arma3\Game";
 
-        public Runner(string serverFolder=null)
+        public Runner()
         {
-            if (serverFolder != null)
-            {
-                ServerFolder = serverFolder;
-            }
+
         }
 
-        private void RunInNewTerminal(string exec, string parameters)
+        /// <summary>
+        /// Initializes the runner based on the config file.
+        /// </summary>
+        /// <param name="config"></param>
+        public Runner(ServerConfig config)
         {
-            var terminalExec = @"start cmd /k";
-            var terminalParams = $"{exec} {parameters}";
-            var serverProc = new Process();
-            serverProc.StartInfo.FileName = terminalExec;
-            serverProc.StartInfo.Arguments = terminalParams;
-            serverProc.Start();
+            throw new NotImplementedException();
         }
+
+
+        private Process StartServer(ServerConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Process StartHeadless(ServerConfig config)
+        {
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// DEPRECATED.
+        /// Runs the server and the headless clients from hard coded parameters.
+        /// </summary>
         public void StartServer()
         {
             // find server exec
@@ -47,28 +62,25 @@ namespace arma3_server_starter
             // start server
             Console.WriteLine("Starting Arma3 Server");
 
-            var serverProc = new Process();
-            serverProc.StartInfo.FileName = $"{exec}";
-            serverProc.StartInfo.Arguments = $"{serverParams}";
-            serverProc.StartInfo.CreateNoWindow = false;
-            serverProc.StartInfo.UseShellExecute = true;
-            serverProc.Start();            
+            var serverP = new Process();
+            serverP.StartInfo.FileName = $"{exec}";
+            serverP.StartInfo.Arguments = $"{serverParams}";
+            serverP.Start();
+            Console.WriteLine("Server started");                       
 
-            // start headless clients
-
+            // start headless clients            
             int hc_num = 2;
             var hcParams = @"-client -connect=localhost -port=2302  -nosound -password=sig4freedom -profiles=""D:\Games\Arma3\Profiles"" -mod=""D:\Games\Arma3\Game\mods\@Advanced AI Command;D:\Games\Arma3\Game\mods\@LYTHIUM;D:\Games\Arma3\Game\mods\@Jbad;D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""";
+            
             for (int i = 0; i < hc_num; i++)
             {                
                 Task.Delay(60000).Wait();
-                Console.WriteLine($"Starting Arma3 HC{i}");  
+                Console.WriteLine($"Starting Arma3 HC#{i}");  
 
-                var hcProc = new Process();
-                hcProc.StartInfo.FileName = $"{exec}";
-                hcProc.StartInfo.Arguments = $"{hcParams}";
-                hcProc.StartInfo.CreateNoWindow = false;
-                hcProc.StartInfo.UseShellExecute = false;
-                hcProc.Start();
+                var hcP = new Process();
+                hcP.StartInfo.FileName = $"{exec}";
+                hcP.StartInfo.Arguments = $"{hcParams}";
+                hcP.Start();
             }           
         }
     }
