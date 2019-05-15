@@ -33,7 +33,7 @@ namespace arma3_server_starter
             string json = JsonConvert.SerializeObject(this);
 
             // create filename
-            var name = "server.json"; 
+            var name = $"{this.SParams.Name}_server.json"; 
             var path = Path.Combine(MissionsFolder, name);           
 
             // create file
