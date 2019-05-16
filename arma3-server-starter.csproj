@@ -4,7 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>arma3_server_starter</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="*"/>
+    <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="*"/>
   </ItemGroup>
 </Project>
