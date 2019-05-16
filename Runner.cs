@@ -11,7 +11,7 @@ namespace arma3_server_starter
     /// </summary>
     public class Runner
     {
-        private string ServerFolder = @"D:\Games\Arma3\Game";
+        private const string ServerFolder = @"D:\Games\Arma3\Game";
 
         public Runner()
         {
