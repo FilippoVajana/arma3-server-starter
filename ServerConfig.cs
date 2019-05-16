@@ -10,22 +10,16 @@ namespace arma3_server_starter
     /// </summary>
     public class ServerConfig
     {
-        public ServerConfig()
-        {            
+        private readonly string _path = null;
+        public ServerConfig(){ }
+        public ServerConfig(string missionPath)
+        {
+            _path = missionPath;
         }
 
         // parameters
-
-        //
-        // move to app.config
-        public string ServerFolder { get; set; }
-        public string MissionsFolder { get; set; }
-        public string ModsFolder { get; set; }
-        //
-        //
-
         public int HCCount { get; set; }
-        public GameParams GameParams { get; set; }
+        public MissionParams MissionParams { get; set; }
         public HeadlessParams HCParams { get; set; }
 
         private ServerConfig Load(string configPath)
@@ -33,21 +27,26 @@ namespace arma3_server_starter
             throw new NotImplementedException("Config load not implemented yet.");
         }
 
-        public void SaveConfig()
+        public static string SaveConfig(ServerConfig instance)
         {
             // build json
-            string json = JsonConvert.SerializeObject(this);
+            string json = JsonConvert.SerializeObject(instance);
 
-            // create filename
-            var name = $"{this.GameParams.Name}_server.json"; 
-            var path = Path.Combine(MissionsFolder, name);           
+            // create file path 
+            // (./TADST/mission_name/mission_name_server.json)
+
+            var name = $"{instance.MissionParams.Name}_server.json"; 
+            var path = Path.Combine(instance._path, name);           
 
             // create file
             File.WriteAllText(path, json);
-        }
+
+            System.Console.WriteLine($"Configuration saved at {path}");
+            return path;
+        }        
     }
 
-    public class GameParams
+    public class MissionParams
     {
         public int Port { get; set; }
         public string Config { get; set; }
