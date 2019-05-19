@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using arma3_server_starter.Config;
 
 namespace arma3_server_starter
 {   
@@ -12,11 +13,8 @@ namespace arma3_server_starter
     public class Runner
     {
         private const string ServerFolder = @"D:\Games\Arma3\Game";
-
-        public Runner()
-        {
-
-        }
+        private readonly ServerConfig _config;
+        private readonly string _serverExe;
 
         /// <summary>
         /// Initializes the runner based on the config file.
@@ -24,30 +22,56 @@ namespace arma3_server_starter
         /// <param name="config"></param>
         public Runner(ServerConfig config)
         {
-            throw new NotImplementedException();
+            _config = config;
+            // find server exe
+            _serverExe = Directory
+                .GetFiles(Program.appConfig["AppSettings:server-folder"],
+                                            @"*x64.exe", 
+                                            SearchOption.TopDirectoryOnly)
+                .First();
         }
 
-
-        private Process StartServer(ServerConfig config)
+        public void Run()
         {
-            throw new NotImplementedException();
+            // start server
+            StartServer(_config.Builder.BuildMissionArgs());
+
+            // start hc
+            StartHeadlessClients(_config.Builder.BuildHCArgs());
         }
 
-        private Process StartHeadless(ServerConfig config)
+        private void StartServer(string args)
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine($"Starting server {_config.MParams.Name}");
+
+            // init proces
+            var serverP = new Process();
+            serverP.StartInfo.FileName = $"{_serverExe}";
+            serverP.StartInfo.Arguments = $"{args}";
+            serverP.Start();                    
+
         }
-        
+
+        private void StartHeadlessClients(string args)
+        {
+            for (int i = 0; i < _config.HCParams.Count; i++)
+            {
+                Task.Delay(30000).Wait();
+                System.Console.WriteLine($"Starting HC{i}");
+
+                var hcP = new Process();
+                hcP.StartInfo.FileName = $"{_serverExe}";
+                hcP.StartInfo.Arguments = $"{args}";
+                hcP.Start();
+            }
+        }
+
         /// <summary>
         /// DEPRECATED.
         /// Runs the server and the headless clients from hard coded parameters.
         /// </summary>
         public void StartServer()
-        {
-            // find server exec
-            var exec = Directory.GetFiles(ServerFolder, @"*x64.exe", SearchOption.TopDirectoryOnly)
-                                .First();      
-
+        {            
             // mission params
 
             // vanilla mission
@@ -63,7 +87,7 @@ namespace arma3_server_starter
             Console.WriteLine("Starting Arma3 Server");
 
             var serverP = new Process();
-            serverP.StartInfo.FileName = $"{exec}";
+            serverP.StartInfo.FileName = $"{_serverExe}";
             serverP.StartInfo.Arguments = $"{serverParams}";
             serverP.Start();
             Console.WriteLine("Server started");                       
@@ -78,7 +102,7 @@ namespace arma3_server_starter
                 Console.WriteLine($"Starting Arma3 HC#{i}");  
 
                 var hcP = new Process();
-                hcP.StartInfo.FileName = $"{exec}";
+                hcP.StartInfo.FileName = $"{_serverExe}";
                 hcP.StartInfo.Arguments = $"{hcParams}";
                 hcP.Start();
             }           
