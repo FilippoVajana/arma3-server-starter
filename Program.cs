@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using arma3_server_starter.Config;
 using Microsoft.Extensions.Configuration;
 
 namespace arma3_server_starter
@@ -12,20 +14,45 @@ namespace arma3_server_starter
         {
             // load app config
             appConfig = ReadAppSettings();
-            Console.WriteLine($"Arma3 Server Launcher [v{appConfig["AppInfo:app-version"]}]");
+            Console.WriteLine($"Arma3 Server Launcher v{appConfig["AppInfo:app-version"]}");
             
-            // save empty config
-            var path = Path.Combine(appConfig["AppSettings:server-folder"], appConfig["AppSettings:server-missions-folder"]);
-            SaveEmptyConfig(path);
+            // save empty app config
+            // var path = appConfig["AppSettings:server-missions-folder"];
+            // SaveEmptyConfig(path);
+            // return;
 
-            // find servers config files
-            // display
-            // choose config file
+            // select server config
+            var configPath = "";
+            
+            if (args.Length > 0 && args[0] != null) // check Main args[0] for config path input
+            {
+                System.Console.WriteLine(args[0]);
+                configPath = args[0];
+            }
+            else
+            {
+                // find servers config files
+                var configs = FindServersConfig();
+
+                // display configs
+                System.Console.WriteLine($"Found {configs.Length} configurations");
+                for (int i = 0; i < configs.Length; i++)
+                {
+                    System.Console.WriteLine($"{i}) {configs[i]}");
+                }
+                
+                // choose server config
+                System.Console.Write("Select a configuration: ");
+                var index = Console.ReadLine(); 
+                configPath = configs[int.Parse(index)];               
+            }
+
             // load server config
-
+            var config = new ServerConfig(configPath);
 
             // run server
-            // var runner = new Runner();
+            var runner = new Runner(config);
+            runner.Run();
             // runner.StartServer();
         }
 
@@ -39,18 +66,28 @@ namespace arma3_server_starter
         }
 
         private static string SaveEmptyConfig(string path)
-        {
-            // init
-            var mission = new MissionParams();
-            var hc = new HeadlessParams();
-            var server = new ServerConfig(path){
-                HCCount = 2,
-                MissionParams = mission,
-                HCParams = hc
-            };
-
+        {    
             // save
-            return ServerConfig.SaveConfig(server);
+            return new ServerConfig().Save(path);
+        }
+
+        private static string[] FindServersConfig()
+        {
+            var path = appConfig["AppSettings:server-missions-folder"];
+
+            // get missions folders
+            var missions = Directory.GetDirectories(path);
+
+            // for each folder search for json config files
+            var configs = missions.Select(p => {
+                var f = new DirectoryInfo(p);
+                var files = f.GetFiles($"{f.Name}{appConfig["AppSettings:server-config-suffix"]}")
+                    .Select(file => file.FullName);
+                return files;
+            });
+
+            // flatten the 2D array of config paths
+            return configs.SelectMany(c => c).Distinct().ToArray();
         }
     }
 }
