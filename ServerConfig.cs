@@ -115,12 +115,11 @@ namespace arma3_server_starter.Config
                 strBase += $"-port={p.Port} ";
                 strBase += $"\"-config={AddBaseFolder(p.Config)}\" ";
                 strBase += $"\"-cfg={AddBaseFolder(p.Cfg)}\" ";
-                strBase += $"\"-profiles={AddBaseFolder(p.Profiles)}\" ";
-                strBase += $"\"-mods={FlattenMods(p.Mod)}\" ";
+                strBase += $"\"-profiles={AddBaseFolder(p.Profiles)}\" ";                
                 strBase += $"-name={p.Name} ";
                 if (p.FilePatching)
-                    strBase += "-filePatching";
-
+                    strBase += "-filePatching ";
+                strBase += $"\"-mod={FlattenMods(p.Mod)}\"";
                 return strBase;
             }
 
@@ -131,12 +130,12 @@ namespace arma3_server_starter.Config
                 if (p.Client)
                     strBase += "-client ";
                 strBase += $"-connect={p.Connect} ";
-                strBase += $"-port={p.Port} ";
+                strBase += $"-port={p.Port}  ";
                 if (p.NoSound)
                     strBase += "-nosound ";
                 strBase += $"-password={p.Password} ";
                 strBase += $"\"-profiles={p.Profiles}\" ";
-                strBase += $"\"-mods={FlattenMods(p.Mod)}\" ";
+                strBase += $"\"-mod={FlattenMods(p.Mod)}\"";
 
                 return strBase;
             }

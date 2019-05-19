@@ -44,6 +44,9 @@ namespace arma3_server_starter
         {
             System.Console.WriteLine($"Starting server {_config.MParams.Name}");
 
+            // System.Console.WriteLine(args);
+            // System.Console.WriteLine(@"-port=2302 ""-config=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium\TADST_config.cfg"" ""-cfg=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium\TADST_basic.cfg"" ""-profiles=D:\Games\Arma3\Game\TADST\KP_964_RHS_Lythium"" -name=KP_964_RHS_Lythium -filePatching ""-mod=D:\Games\Arma3\Game\mods\@Advanced AI Command;D:\Games\Arma3\Game\mods\@LYTHIUM;D:\Games\Arma3\Game\mods\@Jbad;D:\Games\Arma3\Game\mods\@RHSUSAF;D:\Games\Arma3\Game\mods\@RHSAFRE;D:\Games\Arma3\Game\mods\@Project OPFOR;D:\Games\Arma3\Game\mods\@CBA_A3""");
+
             // init proces
             var serverP = new Process();
             serverP.StartInfo.FileName = $"{_serverExe}";
@@ -56,7 +59,7 @@ namespace arma3_server_starter
         {
             for (int i = 0; i < _config.HCParams.Count; i++)
             {
-                Task.Delay(30000).Wait();
+                Task.Delay(45000).Wait();
                 System.Console.WriteLine($"Starting HC{i}");
 
                 var hcP = new Process();
