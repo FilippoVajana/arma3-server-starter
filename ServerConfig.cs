@@ -7,17 +7,18 @@ using Newtonsoft.Json;
 namespace arma3_server_starter.Config
 {
     /// <summary>
-    /// Server specific configuration parameters.
+    /// Server instance configuration parameters.
     /// </summary>
     public class ServerConfig
     {
         private readonly string _path = null;
+
         [JsonIgnore]
-        public ArgsBuilder Builder 
+        public ConfigArgsBuilder Builder 
         {
             get
             {
-                return new ArgsBuilder(_path, this);
+                return new ConfigArgsBuilder(_path, this);
             } 
             private set
             {
@@ -34,11 +35,6 @@ namespace arma3_server_starter.Config
             MParams = new MissionParams();
             HCParams = new HeadlessParams();
         }
-        
-        /// <summary>
-        /// Initializes configuration from file.
-        /// </summary>
-        /// <param name="configPath"></param>
         public ServerConfig(string configPath)
         {
             _path = configPath;
@@ -81,17 +77,18 @@ namespace arma3_server_starter.Config
             return path;
         }
 
-        public class ArgsBuilder
+        public class ConfigArgsBuilder
         {
             private readonly string _missionPath;
             private readonly string _modsPath;
             private readonly ServerConfig _config;
-            internal ArgsBuilder(string basePath, ServerConfig config)
+            internal ConfigArgsBuilder(string basePath, ServerConfig config)
             {
                 _missionPath = basePath;
-                _modsPath = Program.appConfig["AppSettings:server-mods-folder"];
+                _modsPath = Program.appConfig["AppSettings:ModsDir"];
                 _config = config;
             }
+
             private string AddBaseFolder(string p)
             {
                 return Path.Combine(_missionPath, p);
@@ -108,6 +105,7 @@ namespace arma3_server_starter.Config
 
                 return m;
             }
+
             internal string BuildMissionArgs()
             {
                 var p = _config.MParams;
