@@ -69,7 +69,7 @@ namespace arma3_server_starter.Config
 
     public class AppInfo
     {
-        public string Version => "0.3";
+        public string Version => "0.4";
     }
     public class AppSettings
     { 
